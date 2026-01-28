@@ -1,0 +1,41 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# CSV data files
+*.csv
+
+# FAISS index files
+migration_faiss_index/
+migration_faiss_index_chunked/
+hr_policy_faiss_index/
+*_faiss_index/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Excel files
+*.xlsx
+*.xls
+~$*.xlsx
+~$*.xls
+
+# Logs
+*.log
