@@ -3,14 +3,16 @@ import pandas as pd
 import gradio as gr
 from dotenv import load_dotenv
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from google import genai
+from langchain_huggingface import HuggingFaceEmbeddings
+# from google import genai
+import google.generativeai as genai
 
 # -----------------------------
 # Load environment variables
 # -----------------------------
 load_dotenv()
-client = genai.Client()
+# client = genai.Client()
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # -----------------------------
 # Load FAISS vectorstore
@@ -127,10 +129,12 @@ Question: {query}
 Answer (be specific about what IS available and what ISN'T):
 """
     
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
-    )
+    # response = client.models.generate_content(
+    #     model="gemini-2.5-flash",
+    #     contents=prompt
+    # )
+    model = genai.GenerativeModel("gemini-2.5-flash")
+    response = model.generate_content(prompt)
     
     answer = response.text.strip()
     
@@ -172,8 +176,7 @@ with gr.Blocks(title="Migration Assistant", theme=gr.themes.Soft()) as demo:
             with gr.Column(scale=3):
                 answer_output = gr.Textbox(
                     lines=20,
-                    label="Answer",
-                    show_copy_button=True
+                    label="Answer"
                 )
         
         gr.Examples(
